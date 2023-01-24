@@ -48,7 +48,6 @@
     <Compile Include="List.fs" />
     <Compile Include="Tree.fs" />
     <Compile Include="BST.fs" />
-    <Compile Include="Calculator.fs" />
     <Compile Include="Test.fs" />
     <Compile Include="Program.fs" />
     <None Include="packages.config" />
