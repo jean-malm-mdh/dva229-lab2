@@ -8,6 +8,5 @@
 #load "List.fs"
 #load "Tree.fs"
 #load "BST.fs"
-#load "Calculator.fs"
 #load "Test.fs"
 #load "Program.fs"
