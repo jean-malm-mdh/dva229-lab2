@@ -13,7 +13,10 @@ module Test =
 
   let catchWithFalse (f : Lazy<bool>) =
     try f.Force () with | _ -> false
-
+  
+  let allAreTrue conds =
+    let _and a b = a && b
+    List.reduce _and conds
 
 
   // backticks allow for spaces in names
@@ -88,14 +91,39 @@ module Test =
 
 
     let all () = Check.QuickAll<``Lab2 list functions``>()
+  
+  type ``Lab2 Tree functions`` =
 
+    static member isEmptyProperty (e : int) =
+        [
+          Tree.empty 
+            |> Tree.isEmpty = true ;
+          Tree.leaf e 
+            |> Tree.isEmpty = false ;
+          (Tree.root (Tree.empty) e (Tree.empty)) 
+            |> Tree.isEmpty = false ;
+        ] |> allAreTrue
+    static member isLeafProperty (e : int) =
+        [
+          Tree.empty 
+            |> Tree.isLeaf = false ;
+          Tree.leaf e 
+            |> Tree.isLeaf = true ;
+          (Tree.root (Tree.empty) e (Tree.empty)) 
+            |> Tree.isLeaf = false ;
+        ] |> allAreTrue
+  module Tree =
+    let emptyTree () = Check.Quick ``Lab2 Tree functions``.isEmptyProperty
 
-
+    let leafTree () = Check.Quick ``Lab2 Tree functions``.isLeafProperty
+    
+    let all () = Check.QuickAll<``Lab2 Tree functions``>()
   // backticks allow for spaces in names
   type ``Lab2 BST functions`` =
     static member SortList (xs : int list) =
       lazy (BST.sortList xs = List.sort xs)
       |> catchWithFalse
+    
 
 
 
@@ -110,4 +138,5 @@ module Test =
 
   let all () =
     Check.QuickAll<``Lab2 list functions``>()
+    Check.QuickAll<``Lab2 Tree functions``>()
     Check.QuickAll<``Lab2 BST functions``>()
