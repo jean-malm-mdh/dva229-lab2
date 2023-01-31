@@ -95,23 +95,42 @@ module Test =
   type ``Lab2 Tree functions`` =
 
     static member isEmptyProperty (e : int) =
-        [
-          Tree.empty 
-            |> Tree.isEmpty = true ;
-          Tree.leaf e 
-            |> Tree.isEmpty = false ;
-          (Tree.root (Tree.empty) e (Tree.empty)) 
-            |> Tree.isEmpty = false ;
-        ] |> allAreTrue
+      [
+        Tree.empty 
+          |> Tree.isEmpty = true ;
+        Tree.leaf e 
+          |> Tree.isEmpty = false ;
+        (Tree.root (Tree.empty) e (Tree.empty)) 
+          |> Tree.isEmpty = false ;
+      ] |> allAreTrue
     static member isLeafProperty (e : int) =
-        [
-          Tree.empty 
-            |> Tree.isLeaf = false ;
-          Tree.leaf e 
-            |> Tree.isLeaf = true ;
-          (Tree.root (Tree.empty) e (Tree.empty)) 
-            |> Tree.isLeaf = false ;
-        ] |> allAreTrue
+      [
+        Tree.empty 
+          |> Tree.isLeaf = false ;
+        Tree.leaf e 
+          |> Tree.isLeaf = true ;
+        (Tree.root (Tree.empty) e (Tree.empty)) 
+          |> Tree.isLeaf = false ;
+      ] |> allAreTrue
+    static member canExtractHead (e : int) =
+      let checkEmptyHead () =
+        try
+          // head on empty should throw some exception
+          Tree.head (Tree.empty)
+          // Hence, if we reach this point without raising an issue, fail the test
+          false
+        with 
+        | _ -> true
+
+      let testLeaf = Tree.leaf e
+      [
+        checkEmptyHead ();
+        testLeaf 
+          |> Tree.head = e ;
+        (Tree.root (Tree.leaf e / 2) e (Tree.leaf e / 4)) 
+          |> Tree.head = e ;
+      ] |> allAreTrue
+
   module Tree =
     let emptyTree () = Check.Quick ``Lab2 Tree functions``.isEmptyProperty
 
