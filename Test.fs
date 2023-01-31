@@ -158,6 +158,32 @@ module Test =
         checkLeftOnLeaf e;
         testRoot |> Tree.left = expected ;
       ] |> allAreTrue
+
+    static member canGetRightTree (e : int) =
+      let checkRightOnEmpty () =
+        try
+          // left on empty should throw some exception
+          Tree.right (Tree.empty)
+          // Hence, if we reach this point without raising an issue, fail the test
+          false
+        with 
+        | _ -> true
+
+      let checkRightOnLeaf (e : int) =
+        try
+          // head on empty should throw some exception
+          Tree.right (Tree.leaf e)
+          // Hence, if we reach this point without raising an issue, fail the test
+          false
+        with 
+        | _ -> true
+      let expected = Tree.leaf e
+      let testRoot = Tree.root (Tree.empty) e (Tree.leaf e)
+      [
+        checkRightOnEmpty ();
+        checkRightOnLeaf e;
+        testRoot |> Tree.right = expected ;
+      ] |> allAreTrue
   module Tree =
     let emptyTree () = Check.Quick ``Lab2 Tree functions``.emptyTree_isEmptyAndNotLeaf
 
@@ -169,8 +195,10 @@ module Test =
 
     let Left () = Check.Quick ``Lab2 Tree functions``.canGetLeftTree
     
-    let all () = Check.QuickAll<``Lab2 Tree functions``>()
+    let Right () = Check.Quick ``Lab2 Tree functions``.canGetRightTree
     
+    let all () = Check.QuickAll<``Lab2 Tree functions``>()
+
   // backticks allow for spaces in names
   type ``Lab2 BST functions`` =
     static member SortList (xs : int list) =
