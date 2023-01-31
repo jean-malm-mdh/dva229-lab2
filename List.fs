@@ -39,7 +39,8 @@ module List =
   // The output list cannot contain duplicates.
   //
   // Note:
-  //   * You cannot use builtin list functions.
+  //   * You may not use any built-in functions 
+  //   * from the list module EXCEPT List.append (or @)
 
 
 
