@@ -108,7 +108,7 @@ module Test =
           Tree.leaf e 
             |> Tree.isLeaf = true ;
         ] |> allAreTrue
-    static member root_isNeitherEmptyNorLeaf (e1,e2,e3 : int*int*int) =
+    static member root_isNeitherEmptyNorLeaf (e1 : int) (e2 : int) (e3 : int) =
       let testRoot = Tree.root (Tree.leaf e1) e2 (Tree.leaf e3)
       [
         testRoot |> Tree.isEmpty = false ;
