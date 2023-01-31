@@ -129,7 +129,7 @@ module Test =
         checkEmptyHead ();
         testLeaf 
           |> Tree.head = e ;
-        (Tree.root (Tree.leaf e / 2) e (Tree.leaf e / 4)) 
+        (Tree.root (Tree.leaf (e / 2)) e (Tree.leaf (e / 4))) 
           |> Tree.head = e ;
       ] |> allAreTrue
 
