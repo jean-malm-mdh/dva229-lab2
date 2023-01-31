@@ -145,7 +145,7 @@ module Test =
 
       let checkLeftOnLeaf (e : int) =
         try
-          // head on empty should throw some exception
+          // left on empty should throw some exception
           Tree.left (Tree.leaf e)
           // Hence, if we reach this point without raising an issue, fail the test
           false
@@ -162,7 +162,7 @@ module Test =
     static member canGetRightTree (e : int) =
       let checkRightOnEmpty () =
         try
-          // left on empty should throw some exception
+          // right on empty should throw some exception
           Tree.right (Tree.empty)
           // Hence, if we reach this point without raising an issue, fail the test
           false
@@ -171,7 +171,7 @@ module Test =
 
       let checkRightOnLeaf (e : int) =
         try
-          // head on empty should throw some exception
+          // right on empty should throw some exception
           Tree.right (Tree.leaf e)
           // Hence, if we reach this point without raising an issue, fail the test
           false
