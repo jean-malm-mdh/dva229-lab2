@@ -94,23 +94,25 @@ module Test =
   
   type ``Lab2 Tree functions`` =
 
-    static member isEmptyProperty (e : int) =
+    static member emptyTree_isEmptyAndNotLeaf () =
       [
         Tree.empty 
           |> Tree.isEmpty = true ;
-        Tree.leaf e 
-          |> Tree.isEmpty = false ;
-        (Tree.root (Tree.empty) e (Tree.empty)) 
-          |> Tree.isEmpty = false ;
-      ] |> allAreTrue
-    static member isLeafProperty (e : int) =
-      [
         Tree.empty 
           |> Tree.isLeaf = false ;
-        Tree.leaf e 
-          |> Tree.isLeaf = true ;
-        (Tree.root (Tree.empty) e (Tree.empty)) 
-          |> Tree.isLeaf = false ;
+      ] |> allAreTrue
+    static member leaf_isLeafAndNotEmpty (e : int) =
+        [
+          Tree.leaf e 
+            |> Tree.isEmpty = false ;
+          Tree.leaf e 
+            |> Tree.isLeaf = true ;
+        ] |> allAreTrue
+    static member root_isNeitherEmptyNorLeaf (e1,e2,e3 : int*int*int) =
+      let testRoot = Tree.root (Tree.leaf e1) e2 (Tree.leaf e3)
+      [
+        testRoot |> Tree.isEmpty = false ;
+        testRoot |> Tree.isLeaf = false ;
       ] |> allAreTrue
     static member canExtractHead (e : int) =
       let checkEmptyHead () =
@@ -131,12 +133,44 @@ module Test =
           |> Tree.head = e ;
       ] |> allAreTrue
 
-  module Tree =
-    let emptyTree () = Check.Quick ``Lab2 Tree functions``.isEmptyProperty
+    static member canGetLeftTree (e : int) =
+      let checkLeftOnEmpty () =
+        try
+          // left on empty should throw some exception
+          Tree.left (Tree.empty)
+          // Hence, if we reach this point without raising an issue, fail the test
+          false
+        with 
+        | _ -> true
 
-    let leafTree () = Check.Quick ``Lab2 Tree functions``.isLeafProperty
+      let checkLeftOnLeaf (e : int) =
+        try
+          // head on empty should throw some exception
+          Tree.left (Tree.leaf e)
+          // Hence, if we reach this point without raising an issue, fail the test
+          false
+        with 
+        | _ -> true
+      let expected = Tree.leaf e
+      let testRoot = Tree.root (Tree.leaf e) e (Tree.empty)
+      [
+        checkLeftOnEmpty ();
+        checkLeftOnLeaf e;
+        testRoot |> Tree.left = expected ;
+      ] |> allAreTrue
+  module Tree =
+    let emptyTree () = Check.Quick ``Lab2 Tree functions``.emptyTree_isEmptyAndNotLeaf
+
+    let leafTree () = Check.Quick ``Lab2 Tree functions``.leaf_isLeafAndNotEmpty
+    
+    let rootTree () = Check.Quick ``Lab2 Tree functions``.root_isNeitherEmptyNorLeaf
+
+    let Head () = Check.Quick ``Lab2 Tree functions``.canExtractHead
+
+    let Left () = Check.Quick ``Lab2 Tree functions``.canGetLeftTree
     
     let all () = Check.QuickAll<``Lab2 Tree functions``>()
+    
   // backticks allow for spaces in names
   type ``Lab2 BST functions`` =
     static member SortList (xs : int list) =
