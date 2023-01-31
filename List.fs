@@ -30,7 +30,7 @@ module List =
 
 
 
-  let mem x xs = failwith "Error @ mem: Not implemented!"
+  let rec mem x xs = failwith "Error @ mem: Not implemented!"
 
 
 
@@ -43,7 +43,7 @@ module List =
 
 
 
-  let union xs ys = failwith "Error @ union: Not implemented!"
+  let rec union xs ys = failwith "Error @ union: Not implemented!"
 
 
 
@@ -61,7 +61,7 @@ module List =
 
 
 
-  let foo1 x xs = failwith "Error @ foo1: Not implemented!"
+  let rec foo1 x xs = failwith "Error @ foo1: Not implemented!"
 
 
 
@@ -85,7 +85,7 @@ module List =
 
 
 
-  let foo2 f x xs = failwith "Error @ foo2: Not implemented!"
+  let rec foo2 f x xs = failwith "Error @ foo2: Not implemented!"
 
 
 
