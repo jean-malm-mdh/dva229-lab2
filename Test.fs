@@ -93,7 +93,8 @@ module Test =
     let all () = Check.QuickAll<``Lab2 list functions``>()
   
   type ``Lab2 Tree functions`` =
-
+    (*  The following properties check that the different types are disjoint, 
+        i.e., that a leaf is not empty and a root is neither empty nor a leaf *)
     static member emptyTree_isEmptyAndNotLeaf () =
       [
         Tree.empty 
@@ -109,11 +110,14 @@ module Test =
             |> Tree.isLeaf = true ;
         ] |> allAreTrue
     static member root_isNeitherEmptyNorLeaf (e1 : int) (e2 : int) (e3 : int) =
+      let emptyRoot = Tree.root Tree.empty e1 Tree.empty
       let testRoot = Tree.root (Tree.leaf e1) e2 (Tree.leaf e3)
-      [
-        testRoot |> Tree.isEmpty = false ;
-        testRoot |> Tree.isLeaf = false ;
-      ] |> allAreTrue
+        [
+          testRoot |> Tree.isEmpty = false ;
+          testRoot |> Tree.isLeaf = false ;
+          emptyRoot |> Tree.isEmpty = false ;
+          emptyRoot |> Tree.isLeaf = false ;
+        ] |> allAreTrue
     static member canExtractHead (e : int) =
       let checkEmptyHead () =
         try
